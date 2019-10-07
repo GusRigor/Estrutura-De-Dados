@@ -1,4 +1,4 @@
-#include<malloc.h>
+﻿#include<malloc.h>
 #include<stdbool.h>
 #include<assert.h>
 
@@ -11,9 +11,9 @@
  * em aula, faremos cerca de 30 passos para verificar
  * a existência de uma pessoa dentre todas as pessoas da terra.
  *
- * Mas a busca binaria tem um defeito fundamental: ela exige uma 
+ * Mas a busca binaria tem um defeito fundamental: ela exige uma
  * lista ordenada. E inserir um elemento em uma lista ordenada
- * pode ser bem caro: se ele entrar no meio da lista, teremos 
+ * pode ser bem caro: se ele entrar no meio da lista, teremos
  * que mover n/2 elementos. Se, no nosso exemplo do "conjunto
  * de todas as pessoas", nascer uma nova pessoa, teremos que fazer
  * 4 bilhoes de operacoes para ajustar a lista :(
@@ -33,7 +33,7 @@
         /  \
        5    20
       /\   /  \
-     2  7 12  30 
+     2  7 12  30
 
    Observe que 10 tem elementos a sua "esquerda" (5,2 e 7)
    e a sua "direita" (20, 12 e 30)
@@ -49,7 +49,7 @@
    precisamos usar apenas 3 consultas.
 
    12 esta na arvore?
-   Olho pro 10. Se 12 estiver, esta na arvore direita 
+   Olho pro 10. Se 12 estiver, esta na arvore direita
    (onde estao todos os numeros maiores que 10 da arvore)
    Olho pro 20, se 12 estiver esta na arvore esquerda
    (onde estao todos os numeros menores que 20 da "subarvore")
@@ -61,7 +61,7 @@
         /  \
        5    20
       /\   /  \
-     2  7 12  30 
+     2  7 12  30
 
    9 esta na arvore?
    Olho pro 10. Se 9 estiver, esta na arvore esquerda
@@ -74,14 +74,14 @@
 
    EXERCICIO: se eu quiser procurar 40 na arvore, que numeros visitarei?
    */
-   int busca40[10]={};
+   int busca40[10]={10,20,30};
 
    /*
    E se eu quiser buscar o 15? E o 3? E o 5?
    */
-   int busca15[10]={};
-   int busca3[10]={};
-   int busca5[10]={};
+   int busca15[10]={10,20,12};
+   int busca3[10]={10,5,2};
+   int busca5[10]={10,5};
 
    /*
    Uma outra questao importante eh a insercao.
@@ -93,7 +93,7 @@
     / \
    A  B
 
-   Se eu quiser inserir o numero 40 nessa arvore, a posicao correta para 
+   Se eu quiser inserir o numero 40 nessa arvore, a posicao correta para
    fazer isso eh a posicao E (40 eh maior que 20, tem que estar a direita do
    20. Tambem eh maior que 30, entao tem que estar a direita do 30)
 
@@ -104,26 +104,26 @@
        Se eu te der uma lista de numeros, quero uma lista que diga
        onde eles devem ser inseridos.
 
-       Considere que a arvore eh sempre "rebootada", as insercoes de um exercicio 
+       Considere que a arvore eh sempre "rebootada", as insercoes de um exercicio
        nao interferem no seguinte
 
        Por exemplo:
 
    numeros1 = {2,11,25}
    letras1 = {'A','C','D'}
-   /*
+   
    Faca o mesmo para as duas listas abaixo
    */
    int numeros2 [10] = {19,21,33,7};;
-   char letras2 [10] =  {};
+   char letras2 [10] =  {'C','D','E','A'};
    int numeros3 [10] = {9,11,7,50};
-   char letras3 [10] =  {};
+   char letras3 [10] =  {'B','C','A','E'};
 
    /*
    Para representar arvores em C, usamos duas structs.
    */
    struct noh_arv {
-      int     conteudo; 
+      int     conteudo;
       struct noh_arv* esquerda;
       struct noh_arv* direita;
    };
@@ -150,14 +150,14 @@
       return criando;
    }
 
-   /* agora vamos construir uma arvore no braco, soh pra 
+   /* agora vamos construir uma arvore no braco, soh pra
     * praticar o uso das nossas structs */
 
 arvore* constroi_arvore_no_braco () {
    //criamos uma arvore
    arvore* a = cria_arvore();
    //criamos uma arvore cuja raiz vale 30
-   a->raiz = cria_noh(30); 
+   a->raiz = cria_noh(30);
    //adicionamos um noh 20 (que tem que entrar a esquerda do 30)
    a->raiz->esquerda = cria_noh(20);
    //para adicionar o 40, fazemos o seguinte'
@@ -173,7 +173,7 @@ arvore* constroi_arvore_no_braco () {
    aux->direita = cria_noh(45);
    return a;
 }
-    
+
    /*
    Agora voce monta uma arvore.
    Insira o 100, depois o 30, depois o 40, depois o 110
@@ -191,28 +191,28 @@ arvore*  constroi_sua_arvore() {
 
 
    /*
-   Faca uma funcao que 
+   Faca uma funcao que
    recebe uma arvore e retorna o numero presente na sua raiz
 
    Nao se preocupe com o caso da arvore vazia.
    */
 
 int raiz(arvore* a) {
-   return 12;
+   return a->raiz;
 }
 
    /*
    A raiz de arvore eh um noh. Ele tem tipicamente 2 nohs "pendurados"
    nele, o da direita e o da esquerda.
 
-   Faca uma funcao que, dada uma arvore, retorna o valor do 
+   Faca uma funcao que, dada uma arvore, retorna o valor do
    noh da esquerda da raiz.
 
    */
 
 int noh_esquerdo(arvore* a) {
-   return 12;
-}   
+   return a->raiz->esquerda;
+}
 
    /*
    O proximo passo:
@@ -220,22 +220,49 @@ int noh_esquerdo(arvore* a) {
        vai andando para a esquerda "ate nao poder mais" (ate estar
        em um noh que nao tem filho esquerdo) e
        devolve valor correspondente a esse noh.
-       
+
 
    */
 int tudo_a_esquerda(arvore* a) {
-   return 12;
+   noh * aux = a->raiz;
+
+  while(aux->esquerda!=NULL){
+    aux = aux->esquerda;
+  }   
+   return aux->esquerda;
 }
 
    /*
    Agora, facamos uma funcao que recebe uma arvore e um numero, e faz uma busca
-   para ver se o numero esta ou nao na arvore. 
+   para ver se o numero esta ou nao na arvore.
 
    Ela retorna true se o numero esta na arvore, false caso contrario
    */
 
 bool busca(arvore* a, int procurado) {
-   return false;
+
+  arvore * aux = a;
+
+  if(aux->raiz==procurado){
+    return true;
+  }
+
+  while(aux->raiz != procurado){
+    if(aux->raiz > procurado){
+      if(aux->raiz->esquerda == NULL){
+        return false;
+        }
+      aux->raiz= aux->raiz->esquerda;
+    }
+    if(aux->raiz < procurado){
+      if(aux->raiz->direita == NULL){
+        return false;
+        }
+      aux->raiz= aux->raiz->esquerda;
+    }
+  }
+
+   return true;
 }
 
    /*
@@ -247,15 +274,15 @@ bool busca(arvore* a, int procurado) {
         /  \
        5    20
       /\   /  \
-     2  7 12  30 
+     2  7 12  30
 
    e inserirmos o elemento 15, temos
-         
+
          10
         /  \
        5    20
       /\   /  \
-     2  7 12  30 
+     2  7 12  30
            \
            15
 
@@ -299,7 +326,7 @@ int maior(arvore* a) {
 
 /*
 A partir daqui nao existe nada para voce implementar
-tem algumas funcoes utilitarias minhas, e depois 
+tem algumas funcoes utilitarias minhas, e depois
 a main, que contem os testes
 */
 
@@ -395,8 +422,8 @@ int testa_busca(int busca[], int tam) {
 
 int testa_letras(char letras[], int tam) {
    int conta_secreta = 0;
-   for (int i=0; i <= tam; i++) {
-      conta_secreta += ((int) letras[i])*(i+2)*(i+2);
+  for (int i=0; i <= tam; i++) {
+     conta_secreta += ((int) letras[i])*(i+2)*(i+2);
    }
    return conta_secreta;
 }
@@ -413,7 +440,7 @@ bool arv_iguais_rec(noh* n1, noh* n2) {
    if (!arv_iguais_rec(n1->direita,n2->direita))
       return false;
    return true;
-   
+
 }
 
 bool arvores_iguais(arvore* a1, arvore* a2) {
@@ -445,12 +472,12 @@ int main() {
    assert(raiz(ex1()) == 10);
    assert(raiz(ex2()) == 10);
    assert(raiz(ex3()) == 90);
-        
+
    /*funcao noh_esquerdo*/
    assert(noh_esquerdo(arvore5()) == 2);
    assert(noh_esquerdo(arvore10()) == 5);
    assert(noh_esquerdo(arvore20()) == 12);
-    
+
    /*funcao tudo_a_esquerda*/
    assert(tudo_a_esquerda(arvore5()) == 2);
    assert(tudo_a_esquerda(arvore10()) == 2);
@@ -529,7 +556,7 @@ int main() {
    assert(conta(arvore5()) == 3);
    assert(conta(arvore2()) == 1);
    assert(conta(ex3()) == 5);
-   assert(conta(cria_arvore()) == 0); 
+   assert(conta(cria_arvore()) == 0);
 
    /* soma elementos */
    assert(soma(ex1()) == 71);
@@ -537,15 +564,15 @@ int main() {
    assert(soma(ex3()) == 335);
    assert(soma(cria_arvore()) == 0);
 
-  /*maior elemento*/ 
+  /*maior elemento*/
    assert(maior(ex1()) == 20);
    assert(maior(ex2()) == 10);
    assert(maior(ex3()) == 120);
 
    printf("parabeins\n");
-   
+
 }
 
 
-    
-    
+
+
